@@ -4,8 +4,10 @@ from fastapi.staticfiles import StaticFiles
 from app.models.schemas import CopyRequest, ImageRequest
 from app.services.text_generator import generate_marketing_copy
 from app.services.image_generator import generate_image
-
-
+from app.workers.tasks import generate_image_task
+from celery.result import AsyncResult
+from app.workers.celery_app import celery_app
+from app.api.job_routes import router as job_router
 app = FastAPI(title="ViralGen AI")
 
 # ✅ Serve generated images
@@ -34,14 +36,30 @@ def generate_copy(request: CopyRequest):
     }
 
 
-# -------- IMAGE GENERATION --------
-@app.post("/generate-image")
-def create_image(request: ImageRequest):
+@app.post("/generate-image-async")
+def create_image_async(request: ImageRequest):
 
-    result = generate_image(request.product_description)
+    task = generate_image_task.delay(request.product_description)
 
     return {
-        "original_prompt": request.product_description,
-        "enhanced_prompt": result["enhanced_prompt"],
-        "image_url": result["image_url"]
+        "message": "Image generation started",
+        "job_id": task.id
     }
+@app.get("/job-status/{job_id}")
+def get_job_status(job_id: str):
+
+    task_result = AsyncResult(job_id, app=celery_app)
+
+    if task_result.state == "PENDING":
+        return {"status": "pending"}
+
+    elif task_result.state == "SUCCESS":
+        return task_result.result
+
+    elif task_result.state == "FAILURE":
+        return {
+            "status": "failed",
+            "error": str(task_result.info)
+        }
+
+    return {"status": task_result.state}
