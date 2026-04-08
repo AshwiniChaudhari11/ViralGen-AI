@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ViralGen AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>🚀 ViralGen AI</h1>
+
+<div class="card">
+
+<h3>Generate Marketing Copy</h3>
+
+<input id="desc" placeholder="Product description">
+
+<select id="platform">
+    <option>Instagram</option>
+    <option>LinkedIn</option>
+    <option>Twitter</option>
+</select>
+
+<input id="persona" placeholder="Target persona">
+
+<button onclick="generateCopy()">Generate Copy</button>
+
+<div id="copyOutput"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Generate Image (Async)</h3>
+
+<input id="imageDesc" placeholder="Image description">
+
+<button onclick="generateImage()">Generate Image</button>
+
+<div id="imageStatus"></div>
+<img id="resultImage" width="300"/>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
