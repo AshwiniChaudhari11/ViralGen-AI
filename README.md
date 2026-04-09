@@ -1,141 +1,143 @@
-# 🚀 ViralGen AI  
-### Multi-Modal Social Media Ad Content Generator
+# 🤖 ViralGen AI
 
-**ViralGen AI** is an AI-powered marketing technology platform that generates complete social media campaign assets from a simple text brief.  
-The system produces **platform-specific marketing copy** and **AI-generated visuals** while maintaining strict brand voice consistency and scalable processing.
+Create viral marketing copy and stunning AI-generated images in seconds 🚀
 
 ---
 
-## 📌 Project Overview
+## 📌 Overview
 
-Marketing teams often need dozens of campaign variations daily.  
-ViralGen AI automates this workflow by converting a short product description into a ready-to-use marketing asset.
+**ViralGen AI** is an AI-powered web application that helps users:
 
-**Input:**  
-`"Red running shoes"`
-
-**Output:**  
-- Brand-controlled marketing copy  
-- Enhanced image prompt  
-- AI-generated promotional image  
-- Unified campaign response
+* ✍️ Generate marketing copy for different platforms
+* 🎨 Create AI-generated images from text prompts
+* ⚡ Get fast, asynchronous results using background workers
 
 ---
 
-## 🎯 Core Features
+## 🏗️ Project Architecture
 
-### 🧠 Prompt Refinement Agent
-Automatically enhances user prompts into high-quality image instructions for consistent visual generation.
-
-### 🎙️ Brand Voice Enforcement
-Marketing copy generated using predefined personas:
-- Professional
-- Witty
-- Urgent
-- Luxury
-- Friendly
-- Minimal
-
-### ⚡ Asynchronous Processing
-Image generation runs in background workers:
-- API returns **Job ID instantly**
-- Celery worker processes task
-- Redis manages queue
-- Polling endpoint retrieves results
-
-### 🖼️ Multi-Modal Output
-Combines AI text + generated image into a single campaign asset.
-
----
-
-## 🏗️ Architecture
-
-
+```
 ViralGen AI
 │
 ├── app/
-│ ├── api/
-│ ├── services/
-│ ├── agents/
-│ ├── workers/
-│ ├── models/
-│ └── main.py
+│   ├── api/          # FastAPI route handlers (endpoints)
+│   ├── services/     # Business logic (copy + image generation)
+│   ├── agents/       # AI agents / prompt engineering logic
+│   ├── workers/      # Background jobs (async image processing)
+│   ├── models/       # Pydantic models / schemas
+│   └── main.py       # FastAPI app entry point
 │
-├── static/ # Generated images
-├── database/
-└── README.md
-
+├── static/           # Generated images storage
+├── database/         # DB configs / job tracking
+├── README.md         # Project documentation
+```
 
 ---
 
 ## ⚙️ Tech Stack
 
-- Python + FastAPI
-- GPT-4 (Text Generation)
-- Stability AI / DALL·E (Image Generation)
-- Celery + Redis (Async Queue)
-- MongoDB (Persistence)
-- Pillow (Image Processing)
-- Uvicorn Server
+* **Frontend:** HTML, CSS, JavaScript
+* **Backend:** FastAPI
+* **AI Integration:** OpenAI / Stable Diffusion APIs
+* **Async Processing:** Background workers / job queue
+* **Database:** SQLite / PostgreSQL
+
+---
+
+## 🚀 Features
+
+* ✅ AI Marketing Copy Generator
+* ✅ Multi-platform support (Instagram, LinkedIn, Twitter)
+* ✅ Tone selection (Professional, Witty, Urgent)
+* ✅ AI Image Generation (Async)
+* ✅ Image preview + download
+* ✅ Job status tracking
 
 ---
 
 ## 🔄 Workflow
 
-1. User submits product brief  
-2. Brand persona applied  
-3. Marketing copy generated  
-4. Prompt enhanced for visuals  
-5. Async job created  
-6. Image generated via worker  
-7. Final asset returned via polling API  
+### ✍️ Copy Generation
+
+1. User enters product description
+2. Selects platform & tone
+3. Backend generates optimized marketing copy
+4. Result is displayed instantly
+
+---
+
+### 🎨 Image Generation (Async)
+
+1. User enters image description
+2. Request is sent to backend
+3. Background worker processes image
+4. Frontend polls job status
+5. Image is displayed when ready
 
 ---
 
 ## 📡 API Endpoints
 
-### Generate Campaign
-`POST /generate-campaign`
+### Generate Copy
 
-Returns:
-```json
-{
-  "job_id": "123",
-  "status": "processing"
-}
-Check Status
+```
+POST /generate-copy
+```
 
+### Generate Image (Async)
+
+```
+POST /generate-image-async
+```
+
+### Check Job Status
+
+```
 GET /job-status/{job_id}
+```
 
-Returns final marketing copy and image URL.
+---
 
-🧪 Implementation Timeline
-Week 1: Text generation & brand personas
-Week 2: Image generation pipeline
-Week 3: Async queue system (Celery + Redis)
-Week 4: Integration, persistence & end-to-end workflow
-🚀 Installation
-conda create -n viralgen python=3.10
-conda activate viralgen
+## 🖥️ Setup Instructions
+
+### 1️⃣ Clone Repository
+
+```
+git clone https://github.com/your-username/viralgen-ai.git
+cd viralgen-ai
+```
+
+### 2️⃣ Install Dependencies
+
+```
 pip install -r requirements.txt
+```
 
-Create .env:
+### 3️⃣ Run Backend
 
-OPENAI_API_KEY=your_key
-REDIS_URL=redis://localhost:6379
-MONGODB_URI=your_mongodb_uri
-
-Run services:
-
-redis-server
-celery -A app.workers.celery_worker worker --loglevel=info
+```
 uvicorn app.main:app --reload
+```
 
-Open API docs:
+### 4️⃣ Open Frontend
 
-http://127.0.0.1:8000/docs
-🎯 Use Cases
-Marketing automation
-Social media content generation
-Startup branding tools
-AI creative assistants
+Open `index.html` in your browser
+
+---
+
+
+## 💡 Future Enhancements
+
+* 🔐 User authentication
+* 🕘 History of generated content
+* 📊 Analytics dashboard
+* 🌐 Deploy on cloud (AWS / Render / Vercel)
+
+---
+
+
+## ⭐ Contribute
+
+Feel free to fork this repo and improve it!
+
+---
