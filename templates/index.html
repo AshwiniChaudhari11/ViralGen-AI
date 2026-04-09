@@ -7,73 +7,57 @@
 
 <body>
 
-<h1 class="title">🤖 ViralGen AI — Create Like a Pro with AI✨</h1>
+<!-- HERO SECTION -->
+<div class="hero">
+    <h1>🤖 ViralGen AI</h1>
+    <p>Create viral content & stunning AI images in seconds 🚀</p>
+</div>
 
 <div class="container">
 
     <!-- COPY GENERATOR -->
     <div class="card">
-        <h2>Generate Marketing Copy</h2>
+        <h2>✍️ Generate Marketing Copy</h2>
 
-        <input id="desc" placeholder="Product description">
+        <label>Step 1: Product Description</label>
+        <input id="desc" placeholder="e.g. Wireless earbuds with noise cancellation">
 
+        <label>Step 2: Platform</label>
         <select id="platform">
             <option>Instagram</option>
             <option>LinkedIn</option>
             <option>Twitter</option>
         </select>
 
-        <!-- PERSONA DROPDOWN -->
-    <select id="persona">
+        <label>Step 3: Tone</label>
+        <select id="persona"> <option value="professional"> Professional (Formal Business Tone) </option> <option value="witty"> Witty (Fun & Social Media Style) </option> <option value="urgent"> Urgent (High Conversion Marketing) </option> </select>
 
-    <option value="professional">
-        Professional (Formal Business Tone)
-    </option>
-
-    <option value="witty">
-        Witty (Fun & Social Media Style)
-    </option>
-
-    <option value="urgent">
-        Urgent (High Conversion Marketing)
-    </option>
-
-</select>
-
-        <button onclick="generateCopy()">Generate Copy</button>
+        <button id="copyBtn" onclick="generateCopy()">✨ Generate Copy</button>
 
         <div id="copyOutput" class="output"></div>
     </div>
 
-
     <!-- IMAGE GENERATOR -->
     <div class="card">
-        <h2>Generate AI Image</h2>
+        <h2>🎨 Generate AI Image</h2>
 
-        <input id="imageDesc" placeholder="Describe image...">
+        <label>Describe Image</label>
+        <input id="imageDesc" placeholder="e.g. futuristic city, neon lights">
 
-        <button onclick="generateImage()">Generate Image</button>
+        <button id="imgBtn" onclick="generateImage()">✨ Generate Image</button>
 
         <p id="imageStatus" class="status"></p>
 
-        <!-- IMAGE PREVIEW -->
         <div id="imageResult" class="image-result" style="display:none;">
+            <img id="previewImage" class="preview-img" />
 
-    <!-- Small Preview -->
-    <img id="previewImage" class="preview-img" />
-
-    <br>
-
-    <!-- Download Button -->
-    <button id="downloadBtn" class="download-btn">
-        ⬇ Download Image
-    </button>
+            <div class="btn-group">
+                <button id="downloadBtn" class="download-btn">⬇ Download</button>
+            </div>
+        </div>
+    </div>
 
 </div>
-
-</div>
-
 <script src="/static/script.js"></script>
-
 </body>
 </html>
