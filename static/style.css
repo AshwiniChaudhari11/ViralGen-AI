@@ -79,10 +79,11 @@ button:hover {
 /* OUTPUT */
 .output {
     margin-top: 15px;
-    background: rgba(0,0,0,0.4);
-    padding: 12px;
-    border-radius: 10px;
-    min-height: 60px;
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 12px;
+    min-height: 80px;
+    line-height: 1.5;
 }
 
 /* STATUS */
@@ -119,4 +120,18 @@ button:hover {
         flex-direction: column;
         align-items: center;
     }
+}
+button {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    box-shadow: 0 4px 15px rgba(34,197,94,0.4);
+}
+.copy-btn {
+    margin-top: 10px;
+    background: #2563eb;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.copy-btn:hover {
+    background: #3b82f6;
 }

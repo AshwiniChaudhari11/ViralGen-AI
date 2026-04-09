@@ -177,3 +177,20 @@ async function checkStatus(jobId, btn) {
 
     }, 3000);
 }
+
+function copyText() {
+    const text = document.getElementById("copyOutput").innerText;
+
+    if (!text.trim()) {
+        alert("Nothing to copy!");
+        return;
+    }
+
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            alert("✅ Copied to clipboard!");
+        })
+        .catch(() => {
+            alert("❌ Failed to copy");
+        });
+}
