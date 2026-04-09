@@ -1,23 +1,23 @@
+# ✅ IMPORTS FIRST
 from app.workers.celery_app import celery_app
 from app.services.image_generator import generate_image
-
-
 from app.services.job_service import save_job
 
+
+# ✅ THEN DECORATOR
 @celery_app.task(bind=True)
-def generate_image_task(self, product_description: str):
+def generate_image_task(self, prompt):
 
-    image_url = generate_image(product_description)
+    job_id = self.request.id
 
-    # SAVE RESULT IN DATABASE
-    save_job(
-        job_id=self.request.id,
-        prompt=product_description,
-        image_url=image_url,
-        status="completed"
-    )
+    filename = generate_image(prompt)
+
+    BASE_URL = "http://127.0.0.1:8000"
+    image_url = f"{BASE_URL}/static/generated/{filename}"
+
+    save_job(job_id, prompt, image_url, "SUCCESS")
 
     return {
-        "status": "completed",
+        "status": "success",
         "image_url": image_url
     }

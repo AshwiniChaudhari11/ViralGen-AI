@@ -1,37 +1,47 @@
 const API = "http://127.0.0.1:8000";
 
-/* TEXT GENERATION */
+/* ================= COPY GENERATION ================= */
+
 async function generateCopy() {
 
-    const data = {
-        product_description: document.getElementById("desc").value,
-        platform: document.getElementById("platform").value,
-        persona: document.getElementById("persona").value
-    };
+    const desc = document.getElementById("desc");
+    const platform = document.getElementById("platform");
+    const persona = document.getElementById("persona");
+
+    document.getElementById("copyOutput").innerText =
+        "Generating copy... ✨";
 
     const res = await fetch(`${API}/generate-copy`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            product_description: desc.value,
+            platform: platform.value,
+            persona: persona.value
+        })
     });
 
-    const result = await res.json();
+    const data = await res.json();
 
     document.getElementById("copyOutput").innerText =
-        result.generated_copy;
+        data.generated_copy;
 }
 
 
-/* IMAGE GENERATION */
+/* ================= IMAGE GENERATION ================= */
+
 async function generateImage() {
 
-    const desc = document.getElementById("imageDesc").value;
+    const status = document.getElementById("imageStatus");
+
+    status.innerText = "🧠 AI is generating image...";
 
     const res = await fetch(`${API}/generate-image-async`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            product_description: desc
+            product_description:
+                document.getElementById("imageDesc").value
         })
     });
 
@@ -41,21 +51,66 @@ async function generateImage() {
 }
 
 
+/* ================= CHECK IMAGE STATUS ================= */
+
 async function checkStatus(jobId) {
 
-    const statusDiv = document.getElementById("imageStatus");
+    const status = document.getElementById("imageStatus");
 
     const interval = setInterval(async () => {
 
         const res = await fetch(`${API}/job-status/${jobId}`);
         const data = await res.json();
 
-        statusDiv.innerText = "Status: " + data.status;
+        status.innerText = "Status: " + data.status;
 
-        if (data.image_url) {
-            document.getElementById("resultImage").src =
-                data.image_url;
+        /* ✅ IMAGE READY CONDITION */
+        if (data.status === "completed" && data.image_url) {
+
             clearInterval(interval);
+
+            status.innerText = "✅ Image Ready!";
+
+            // IMPORTANT: correct path from backend response
+            const imageUrl = data.image_url.image_url;
+
+            const preview =
+                document.getElementById("previewImage");
+
+            const resultBox =
+                document.getElementById("imageResult");
+
+            const downloadBtn =
+                document.getElementById("downloadBtn");
+
+            /* ---- Show Thumbnail ---- */
+            preview.src = imageUrl;
+            resultBox.style.display = "block";
+
+            /* ---- Open Full Image ---- */
+            preview.onclick = () => {
+                window.open(imageUrl, "_blank");
+            };
+
+            /* ---- Download Fix ---- */
+            downloadBtn.onclick = async () => {
+
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+
+                const url =
+                    window.URL.createObjectURL(blob);
+
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "viralgen-image.png";
+
+                document.body.appendChild(a);
+                a.click();
+
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            };
         }
 
     }, 3000);

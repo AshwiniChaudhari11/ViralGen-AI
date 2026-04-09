@@ -62,12 +62,14 @@ def get_job_status(job_id: str):
 
     job = get_job(job_id)
 
+    # ✅ If stored in DB / Redis
     if job:
         return {
             "status": job["status"],
-            "image_url": job["image_url"]
+            "image_url": job.get("image_url")  # return directly
         }
 
+    # ✅ Check Celery task state
     task_result = AsyncResult(job_id, app=celery_app)
 
     if task_result.state == "PENDING":
@@ -77,6 +79,12 @@ def get_job_status(job_id: str):
         return {
             "status": "failed",
             "error": str(task_result.info)
+        }
+
+    elif task_result.state == "SUCCESS":
+        return {
+            "status": "completed",
+            "image_url": task_result.result
         }
 
     return {"status": task_result.state}

@@ -1,0 +1,17 @@
+cd Desktop\Project2
+
+conda activate viralgen
+
+
+celery -A app.workers.celery_app.celery_app worker --loglevel=info --pool=solo
+
+
+
+uvicorn app.main:app --reload
+
+
+mongosh
+show dbs
+ use viralgen_ai
+show collections
+ db.jobs.find().pretty()

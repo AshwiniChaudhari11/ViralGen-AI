@@ -7,39 +7,69 @@
 
 <body>
 
-<h1>🚀 ViralGen AI</h1>
+<h1 class="title">🤖 ViralGen AI — Create Like a Pro with AI✨</h1>
 
-<div class="card">
+<div class="container">
 
-<h3>Generate Marketing Copy</h3>
+    <!-- COPY GENERATOR -->
+    <div class="card">
+        <h2>Generate Marketing Copy</h2>
 
-<input id="desc" placeholder="Product description">
+        <input id="desc" placeholder="Product description">
 
-<select id="platform">
-    <option>Instagram</option>
-    <option>LinkedIn</option>
-    <option>Twitter</option>
+        <select id="platform">
+            <option>Instagram</option>
+            <option>LinkedIn</option>
+            <option>Twitter</option>
+        </select>
+
+        <!-- PERSONA DROPDOWN -->
+    <select id="persona">
+
+    <option value="professional">
+        Professional (Formal Business Tone)
+    </option>
+
+    <option value="witty">
+        Witty (Fun & Social Media Style)
+    </option>
+
+    <option value="urgent">
+        Urgent (High Conversion Marketing)
+    </option>
+
 </select>
 
-<input id="persona" placeholder="Target persona">
+        <button onclick="generateCopy()">Generate Copy</button>
 
-<button onclick="generateCopy()">Generate Copy</button>
+        <div id="copyOutput" class="output"></div>
+    </div>
 
-<div id="copyOutput"></div>
+
+    <!-- IMAGE GENERATOR -->
+    <div class="card">
+        <h2>Generate AI Image</h2>
+
+        <input id="imageDesc" placeholder="Describe image...">
+
+        <button onclick="generateImage()">Generate Image</button>
+
+        <p id="imageStatus" class="status"></p>
+
+        <!-- IMAGE PREVIEW -->
+        <div id="imageResult" class="image-result" style="display:none;">
+
+    <!-- Small Preview -->
+    <img id="previewImage" class="preview-img" />
+
+    <br>
+
+    <!-- Download Button -->
+    <button id="downloadBtn" class="download-btn">
+        ⬇ Download Image
+    </button>
 
 </div>
-
-
-<div class="card">
-
-<h3>Generate Image (Async)</h3>
-
-<input id="imageDesc" placeholder="Image description">
-
-<button onclick="generateImage()">Generate Image</button>
-
-<div id="imageStatus"></div>
-<img id="resultImage" width="300"/>
 
 </div>
 
